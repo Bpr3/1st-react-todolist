@@ -1,0 +1,47 @@
+.ToDoList {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.ToDoList ul {
+    list-style: none;
+    padding: 0;
+}
+
+.ToDoList li {
+    padding: 10px;
+    margin: 10px 0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.ToDoList .struck {
+    text-decoration: line-through;
+    color: #ccc;
+}
+
+.ToDoList button {
+    padding: 5px 10px;
+    margin-left: 10px;
+    background: #eee;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.ToDoList button:hover {
+    background: #ddd;
+}
+
+.ToDoList button:active {
+    background: #ccc;
+}
+
+.title {
+    display: flex;
+    justify-content: start;
+}
+
+.buttons {
+    display: flex;
+    justify-content: end;
+}
