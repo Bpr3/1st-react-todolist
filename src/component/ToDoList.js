@@ -74,8 +74,8 @@ class ToDoList extends React.Component{
                 </form>
                 <ul>
                     {this.state.todos.map((todo, index) => (
-                        <li key={index} className={todo.isDone && 'struck'}>
-                            <div className={'title'}>{todo.title}</div><br/>
+                        <li key={index} >
+                            <div className={'title' + ' ' + (todo.isDone && 'struck')}>{todo.title}</div><br/>
                             <div className={'buttons'}>
                                 <button onClick={()=>{this.deleteTodo(index);}}>Delete</button>
                                 <button onClick={()=>{this.toggleDone(index);}}>{todo.isDone ? 'Undone' : 'Done'}</button>
