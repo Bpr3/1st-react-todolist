@@ -1,7 +1,7 @@
 import React from 'react';
 import './ToDoList.css';
 
-class ToDoList extends React.Component{
+class ToDoList extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -9,7 +9,7 @@ class ToDoList extends React.Component{
         };
     }
 
-    addToDo(newToDo,isDone = false) {
+    addToDo(newToDo, isDone = false) {
         this.setState({
             todos: [...this.state.todos, {title: newToDo, isDone: isDone}],
         });
@@ -24,7 +24,7 @@ class ToDoList extends React.Component{
         });
     }
 
-    toggleDone(index){
+    toggleDone(index) {
         let newTodos = [...this.state.todos];
         let todo = newTodos[index];
         todo.isDone = !todo.isDone;
@@ -60,27 +60,69 @@ class ToDoList extends React.Component{
     render() {
         return (
             <div className="ToDoList">
-                <form onSubmit={(e) => {
-                    e.preventDefault();
-                    this.addToDo(this.input.value);
-                }}>
+                <form
+                    onSubmit={(e) => {
+                        e.preventDefault();
+                        this.addToDo(this.input.value);
+                    }}
+                >
                     <input
                         type="text"
-                        ref={(input) => { this.input = input; }}
+                        ref={(input) => {
+                            this.input = input;
+                        }}
                         maxLength="60"
-
                     />
                     <button type="submit">Add To-Do</button>
                 </form>
                 <ul>
                     {this.state.todos.map((todo, index) => (
-                        <li key={index} >
-                            <div className={'title' + ' ' + (todo.isDone && 'struck')}>{todo.title}</div><br/>
+                        <li key={index}>
+                            <div className={'title' + ' ' + (todo.isDone && 'struck')}>
+                                {todo.title}
+                                &nbsp;&nbsp;
+                                <span
+                                    className={'modify'}
+                                    onClick={() => {
+                                        this.setState({
+                                            editIndex: index,
+                                        });
+                                    }}
+                                >
+                  &#9998;
+                </span>
+                            </div>
+                            <br/>
+                            {this.state.editIndex === index && (
+                                <form
+                                    onSubmit={(e) => {
+                                        e.preventDefault();
+                                        let newTodos = [...this.state.todos];
+                                        newTodos[index].title = this.inputEdit.value;
+                                        this.setState({
+                                            todos: newTodos,
+                                            editIndex: null,
+                                        });
+                                    }}
+                                >
+                                    <input
+                                        type="text"
+                                        ref={(input) => {
+                                            this.inputEdit = input;
+                                        }}
+                                        defaultValue={todo.title}
+                                        maxLength="60"
+                                    />
+                                    <button type="submit">Update</button>
+                                </form>
+                            )}
                             <div className={'buttons'}>
-                                <button onClick={()=>{this.deleteTodo(index);}}>Delete</button>
-                                <button onClick={()=>{this.toggleDone(index);}}>{todo.isDone ? 'Undone' : 'Done'}</button>
-                                <button onClick={()=>{this.moveUp(index);}}>&uarr;</button>
-                                <button onClick={()=>{this.moveDown(index);}}>&darr;</button>
+                                <button onClick={() => this.deleteTodo(index)}>Delete</button>
+                                <button onClick={() => this.toggleDone(index)}>
+                                    {todo.isDone ? 'Undone' : 'Done'}
+                                </button>
+                                <button onClick={() => this.moveUp(index)}>&uarr;</button>
+                                <button onClick={() => this.moveDown(index)}>&darr;</button>
                             </div>
                         </li>
                     ))}
